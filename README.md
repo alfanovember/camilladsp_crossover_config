@@ -11,8 +11,8 @@ requires:
 `apt install vim bzip2 nodejs npm shairport-sync libsoxr-dev`
 
 `curl -L https://github.com/vi/websocat/releases/latest/download/websocat.aarch64-unknown-linux-musl -o websocat
-chmod +x websocat
-sudo mv websocat /usr/local/bin/
+chmod +x websocat ;
+sudo mv websocat /usr/local/bin/ ;
 websocat --version`
 
 Check the target has been reached:
