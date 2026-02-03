@@ -1,0 +1,17 @@
+[Unit]
+Description=RoonBridge
+After=network-online.target
+
+[Service]
+Type=simple
+User=root
+Environment=ROON_DATAROOT=/var/roon
+Environment=ROON_ID_DIR=/var/roon
+ExecStart=/opt/RoonBridge/start.sh
+Restart=on-abort
+RestartSec=5
+LimitNOFILE=65536
+Slice=audio.slice
+
+[Install]
+WantedBy=audio-stack.target

@@ -1,0 +1,195 @@
+description: 2Khz crossover, 1 octave overlap, 48 db slope.  Loudness correction
+devices:
+  adjust_period: 10
+  capture:
+    channels: 2
+    device: hw:Loopback,0
+    format: S32LE
+    labels: null
+    link_mute_control: null
+    link_volume_control: null
+    stop_on_inactive: null
+    type: Alsa
+  capture_samplerate: 44100
+  chunksize: 1024
+  enable_rate_adjust: true
+  multithreaded: null
+  playback:
+    channels: 4
+    device: hw:M4
+    format: S32LE
+    type: Alsa
+  queuelimit: 4
+  rate_measure_interval: 1
+  resampler:
+    type: Synchronous
+  samplerate: 88200
+  silence_threshold: -96
+  silence_timeout: 50
+  stop_on_rate_change: false
+  target_level: 2048
+  volume_limit: null
+  volume_ramp_time: null
+  worker_threads: null
+filters:
+  Bass:
+    description: Tone Control Slider
+    parameters:
+      freq: 85
+      gain: 0
+      q: 0.9
+      type: Lowshelf
+    type: Biquad
+  Highpass:
+    description: Crossover High
+    parameters:
+      channel: 0
+      filename: ../coeffs/High-1oct2K-48db-88200-stereo.wav
+      type: Wav
+    type: Conv
+  Loudness:
+    description: null
+    parameters:
+      attenuate_mid: false
+      fader: Main
+      high_boost: 5
+      low_boost: 5
+      reference_level: -20
+    type: Loudness
+  Lowpass:
+    description: Crossover Low
+    parameters:
+      channel: 0
+      filename: ../coeffs/Low-1oct2K-48db-88200-stereo.wav
+      type: Wav
+    type: Conv
+  Pad Tweeter:
+    description: null
+    parameters:
+      gain: 0
+      inverted: false
+      mute: false
+      scale: null
+    type: Gain
+  Pad Woofer:
+    description: null
+    parameters:
+      gain: 0
+      inverted: false
+      mute: false
+      scale: null
+    type: Gain
+  Time_Align:
+    description: Push tweeters back 2mS
+    parameters:
+      delay: 2
+      subsample: true
+      unit: ms
+    type: Delay
+  Treble:
+    description: Tone Control Slider
+    parameters:
+      freq: 6500
+      gain: 0
+      q: 0.7
+      type: Highshelf
+    type: Biquad
+mixers:
+  2x4:
+    channels:
+      in: 2
+      out: 4
+    description: Split to four channels
+    labels: null
+    mapping:
+    - dest: 0
+      mute: false
+      sources:
+      - channel: 0
+        gain: 0
+        inverted: false
+        mute: false
+        scale: null
+    - dest: 1
+      mute: false
+      sources:
+      - channel: 1
+        gain: 0
+        inverted: false
+        mute: false
+        scale: null
+    - dest: 2
+      mute: false
+      sources:
+      - channel: 0
+        gain: 0
+        inverted: false
+        mute: false
+        scale: null
+    - dest: 3
+      mute: false
+      sources:
+      - channel: 1
+        gain: 0
+        inverted: false
+        mute: false
+        scale: null
+pipeline:
+- bypassed: null
+  channels:
+  - 0
+  description: In Left
+  names:
+  - Bass
+  - Treble
+  - Loudness
+  type: Filter
+- bypassed: null
+  channels:
+  - 1
+  description: In Right
+  names:
+  - Bass
+  - Treble
+  - Loudness
+  type: Filter
+- bypassed: null
+  description: null
+  name: 2x4
+  type: Mixer
+- bypassed: null
+  channels:
+  - 0
+  description: LF Left
+  names:
+  - Lowpass
+  - Pad Woofer
+  type: Filter
+- bypassed: null
+  channels:
+  - 1
+  description: LF Right
+  names:
+  - Lowpass
+  - Pad Woofer
+  type: Filter
+- bypassed: null
+  channels:
+  - 2
+  description: HF Left
+  names:
+  - Highpass
+  - Pad Tweeter
+  - Time_Align
+  type: Filter
+- bypassed: null
+  channels:
+  - 3
+  description: HF Right
+  names:
+  - Highpass
+  - Pad Tweeter
+  - Time_Align
+  type: Filter
+processors: {}
+title: 1200 Convolved Crossover

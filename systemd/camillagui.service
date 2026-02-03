@@ -1,0 +1,15 @@
+[Unit]
+Description=CamillaDSP Web GUI
+After=camilladsp.service
+Requires=camilladsp.service
+
+[Service]
+Type=idle
+User=crossover
+ExecStart=/opt/crossover/camillagui_backend/camillagui_backend
+Slice=audio.slice
+
+[Install]
+WantedBy=audio-stack.target
+
+

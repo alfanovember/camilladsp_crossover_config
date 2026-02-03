@@ -1,0 +1,20 @@
+[Unit]
+Description=CamillaDSP
+After=sound.target network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+EnvironmentFile=/opt/crossover/environment
+WorkingDirectory=/opt/crossover
+ExecStart=/usr/local/bin/camilladsp camilladsp/configs/Default.yml -s camilladsp/statefile.yml -g-40 -o camilladsp/camilladsp.log -p1234 -a $HOST_IP 
+Restart=always
+RestartSec=5
+LimitRTPRIO=95
+LimitMEMLOCK=infinity
+Slice=audio.slice
+
+[Install]
+WantedBy=audio-stack.target
+

@@ -1,0 +1,17 @@
+[Unit]
+Description=Roon Extension for CamillaDSP volume
+#After=roonbridge.service camilladsp.service camillagui.service
+After=websocket-ready.target
+Wants=websocket-ready.target
+
+[Service]
+User=root
+Type=idle
+Environment=NODE_NO_WARNINGS
+ExecStart=node /opt/roon-extension-cdsp/app.js
+Restart=always
+RestartSec=5
+Slice=audio.slice
+
+[Install]
+WantedBy=audio-stack.target

@@ -1,0 +1,20 @@
+#[Unit]
+#Description=Audio Stack (RoonBridge + CamillaDSP + GUI + Extension-CDSP + Shairport-Sync)
+#Requires=roonbridge.service camilladsp.service camillagui.service roon-extension-cdsp.service shairport-sync.service
+#After=network-online.target sound.target
+#Wants=network-online.target
+
+[Unit]
+Description=Audio Stack (RoonBridge + CamillaDSP + GUI + Extension-CDSP + Shairport-Sync)
+
+# Core services
+Requires=roonbridge.service camilladsp.service camillagui.service roon-extension-cdsp.service shairport-sync.service websocket-ready.target
+
+# Ordering
+After=network-online.target sound.target camilladsp.service websocket-ready.target
+Wants=network-online.target websocket-ready.target
+
+
+[Install]
+WantedBy=multi-user.target
+

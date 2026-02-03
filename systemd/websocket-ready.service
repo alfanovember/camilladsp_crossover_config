@@ -1,0 +1,11 @@
+# This service blocks until the WebSocket works, then exits successfully. 
+[Unit]
+Description=Wait for CamillaDSP WebSocket (port 1234)
+After=camilladsp.service
+Requires=camilladsp.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/bash -c 'IP=$(ip route get 1.1.1.1 | awk "{print \$7}");echo "Waiting for WebSocket on $IP:1234..."; until echo | websocat ws://$IP:1234 >/dev/null 2>&1; do sleep 2; done; echo "WebSocket ready on $IP:1234"'
+

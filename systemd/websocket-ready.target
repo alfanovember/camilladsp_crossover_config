@@ -1,0 +1,5 @@
+[Unit]
+Description=WebSocket Ready (CamillaDSP)
+Requires=websocket-ready.service
+After=websocket-ready.service
+
