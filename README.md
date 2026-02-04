@@ -43,4 +43,12 @@ Anything else like 'disconnected' isn't working.
 
 Edit the Roon Zone / Audio Device Setup to use "CamillaDSP Volume/Mute Control:<Zone>" to control volume. This option is only visible when roon-extension-cdsp is running proper.
 
+## Troubleshooting ##
+
+- Try moving the statefile.yml  aside, or at least check the config_path is correct
+- Check the ip address is correct in the roon-extension config.json file
+- Check the ip in camillagui.yml
+- CamillaDSP needs to access the audio devices and open a websocket, easiest to run as root.
+- CamillaGUI can run as non-root
+- roon-extension-cdsp runs as root (haven't tried alternate)
 
