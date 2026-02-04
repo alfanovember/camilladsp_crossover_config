@@ -12,12 +12,14 @@ All services run in an 'audio.slice' cgroup and with proper startup sequencing. 
 
 requires:
 
-`apt install vim bzip2 nodejs npm shairport-sync libsoxr-dev yq`
+`apt install -y vim bzip2 nodejs npm shairport-sync libsoxr-dev yq`
 
-`curl -L https://github.com/vi/websocat/releases/latest/download/websocat.aarch64-unknown-linux-musl -o websocat
-chmod +x websocat ;
-sudo mv websocat /usr/local/bin/ ;
-websocat --version`
+```
+curl -L https://github.com/vi/websocat/releases/latest/download/websocat.aarch64-unknown-linux-musl -o websocat
+chmod +x websocat 
+sudo mv websocat /usr/local/bin/ 
+websocat --version
+```
 
 `useradd -d /opt/crossover/ crossover`
 
@@ -34,7 +36,6 @@ websocat --version`
   `sed -i "s/127.0.0.1/$(hostname -I | awk "{print \$1}")/g" /opt/crossover/camillagui_backend/_internal/config/camillagui.yml`
 
 - Or use yq to assign the IP value to the camilla_host key:
-
  `IP=$(ip -4 route get 1.1.1.1 | awk '{print $7; exit}')`
  `yq -y -i ".camilla_host = \"${IP}\"" /opt/crossover/camillagui_backend/_internal/config/camillagui.yml`
 
