@@ -2,6 +2,10 @@
 
 Configurations to run CamillaDSP v3 as a crossover with GUI and Volume control through Roon via websocket extension
 
+All services are installed under `/opt`
+
+Several services run under the service account "crossover", which has the home directory `/opt/crossover`
+
 All services run in an 'audio.slice' cgroup and with proper startup sequencing.  Notably:
  - camilladsp needs to include the `-address $HOST_IP` arg, or it will not open a listening websocket.
  - roon-extension-cdsp requires the camilladsp process to have opened a websocket on the main IPv4 interface.
@@ -14,6 +18,8 @@ requires:
 chmod +x websocat ;
 sudo mv websocat /usr/local/bin/ ;
 websocat --version`
+
+`useradd -d /opt/crossover/ crossover`
 
 ## Configuration Steps ##
 (I couldn't figure out how to handle at runtime via systemd args)
