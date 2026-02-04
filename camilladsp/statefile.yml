@@ -1,0 +1,14 @@
+---
+config_path: /opt/crossover/camilladsp/configs/Default.yml
+mute:
+  - false
+  - false
+  - false
+  - false
+  - false
+volume:
+  - -55.0
+  - 0.0
+  - 0.0
+  - 0.0
+  - 0.0
