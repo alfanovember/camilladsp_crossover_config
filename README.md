@@ -18,11 +18,14 @@ websocat --version`
 ## Configuration Steps ##
 (I couldn't figure out how to handle at runtime via systemd args)
 
+- Add any non-root service accounts to the audio group:
+  `usermod -G audio crossover`
+
 - Put the local IPv4 address in a systemd environment file so that systemd can use it to launch camilladsp with a websocket listener:
-`echo "HOST_IP="$(hostname -I | awk "{print \$1}") | tee -a > /opt/crossover/environment`
+  `echo "HOST_IP="$(hostname -I | awk "{print \$1}") | tee -a > /opt/crossover/environment`
   
 - Enabling the websocket means CamillaGUI needs to be told to talk to CamillaDSP via the main IP, not loopback:
-`sed -i "s/127.0.0.1/$(hostname -I | awk "{print \$1}")/g" /opt/crossover/camillagui_backend/_internal/config/camillagui.yml`
+  `sed -i "s/127.0.0.1/$(hostname -I | awk "{print \$1}")/g" /opt/crossover/camillagui_backend/_internal/config/camillagui.yml`
 
 
 ## Running the Software ##
