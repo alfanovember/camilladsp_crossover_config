@@ -46,6 +46,7 @@ useradd -d /opt/crossover/ -G audio crossover
   
 - Enabling the websocket means CamillaGUI needs to be told to talk to CamillaDSP via the main IP, not loopback:
   ```
+  cp /opt/crossover/camillagui_backend/_internal/config/camillagui.yml /opt/crossover/camillagui_backend/_internal/config/camillagui.orig
   sed -i "s/127.0.0.1/$(hostname -I | awk "{print \$1}")/g" /opt/crossover/camillagui_backend/_internal/config/camillagui.yml
   ```
 
@@ -56,12 +57,11 @@ useradd -d /opt/crossover/ -G audio crossover
   ```
 (yq is the "better way" to manipulate YAML files safely, but it's kinda heavy)
 
-The CamillaGUI config file uses "~" relative path indicators, which is the home directory for the UID the service is running as.  I don't love this; it adds a layer of confusion to troubleshooting and silently changes when you're trying to debug by running as root or whathaveyou.
+- The CamillaGUI config file uses "~" relative path indicators, which is the home directory for the UID the service is running as.  I don't love this; it adds a layer of confusion to troubleshooting and silently changes when you're trying to debug by running as root or whathaveyou.
 
-```
-cp /opt/crossover/camillagui_backend/_internal/config/camillagui.yml /opt/crossover/camillagui_backend/_internal/config/camillagui.orig
-sed -i 's|~/|/opt/crossover/|g' /opt/crossover/camillagui_backend/_internal/config/camillagui.yml
-```
+  ```
+  sed -i 's|~/|/opt/crossover/|g' /opt/crossover/camillagui_backend/_internal/config/camillagui.yml
+  ```
 
 ## Running the Software ##
 
