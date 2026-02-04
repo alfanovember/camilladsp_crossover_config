@@ -16,7 +16,7 @@ Packages:
 ```
 apt install -y vim bzip2 nodejs npm shairport-sync libsoxr-dev yq
 ```
-websocat to validate websocket function:
+websocat so roon-extension-cdsp can validate camilladsp websocket is up & running:
 ```
 curl -L https://github.com/vi/websocat/releases/latest/download/websocat.aarch64-unknown-linux-musl -o websocat
 chmod +x websocat 
