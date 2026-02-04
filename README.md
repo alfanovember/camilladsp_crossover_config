@@ -54,7 +54,13 @@ useradd -d /opt/crossover/ -G audio crossover
   IP=$(ip -4 route get 1.1.1.1 | awk '{print $7; exit}')
   yq -y -i ".camilla_host = \"${IP}\"" /opt/crossover/camillagui_backend/_internal/config/camillagui.yml
   ```
-(yq is the better way to manipulate YAML files safely)
+(yq is the "better way" to manipulate YAML files safely, but it's kinda heavy)
+
+The CamillaGUI config file uses "~" relative path indicators, which is the home directory for the UID the service is running as.  I don't love this; it adds a layer of confusion to troubleshooting and silently changes when you're trying to debug by running as root or whathaveyou.
+
+```
+sed -i 's|~/|/opt/crossover/|g' /opt/crossover/camillagui_backend/_internal/config/camillagui.yml
+```
 
 ## Running the Software ##
 
