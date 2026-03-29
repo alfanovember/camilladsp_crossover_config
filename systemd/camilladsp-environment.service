@@ -1,0 +1,12 @@
+[Unit]
+Description=Generate environment variables for CamillaDSP 
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStartPre=/bin/bash -c 'until ip -4 route get 1; do sleep 1; done'
+ExecStart=/bin/bash -c "echo HOST_IP=$(ip -4 route get 1 |  cut -d ' ' -f7)"
+
+[Install]
+WantedBy=multi-user.target
