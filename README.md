@@ -39,7 +39,7 @@ useradd -d /opt/crossover/ -G audio crossover
 (I.E. Things I couldn't figure out how to handle at runtime via systemd args)
 
 
-- Put the local IPv4 address in a systemd environment file so that systemd can use it to launch camilladsp with a websocket listener:
+- SEE camilladsp-environment.service, deprecates:  Put the local IPv4 address in a systemd environment file so that systemd can use it to launch camilladsp with a websocket listener:
   ```
   echo "HOST_IP="$(hostname -I | awk "{print \$1}") | tee -a > /opt/crossover/environment
   ```
