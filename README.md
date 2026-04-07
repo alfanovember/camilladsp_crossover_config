@@ -14,7 +14,7 @@ All services run in an 'audio.slice' cgroup and with proper startup sequencing. 
 ## Requires: ##
 Packages:
 ```
-apt install -y vim bzip2 nodejs npm shairport-sync libsoxr-dev yq
+apt install -y git vim bzip2 nodejs npm shairport-sync libsoxr-dev yq uzip
 ```
 websocat so roon-extension-cdsp can validate camilladsp websocket is up & running:
 ```
