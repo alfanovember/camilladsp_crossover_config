@@ -8,8 +8,7 @@ After=camilladsp-environment.service
 [Service]
 Type=simple
 User=root
-#EnvironmentFile=/run/camilladsp.env
-EnvironmentFile=/opt/crossover/environment
+EnvironmentFile=/opt/crossover/local/environment
 WorkingDirectory=/opt/crossover
 ExecStart=/usr/local/bin/camilladsp -s /opt/crossover/camilladsp/statefile.yml -w -g-50 -o /opt/crossover/camilladsp/camilladsp.log -p 1234 -a $HOST_IP
 Restart=always
