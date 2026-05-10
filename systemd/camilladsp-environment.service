@@ -3,16 +3,13 @@ Description=Generate environment variables for CamillaDSP
 After=network-online.target
 Wants=network-online.target
 
-# Use the Post command to insert the current main IPv4 addy into camillagui.yml
-# using loopback does not work when websocket is enabled
+#  IPv4 and any future envvars moved to local/bin/generate-camilla-environment-config.sh script
+#  Easier than dealing with systemd quote-escaping headaches
 
 [Service]
 Type=oneshot
 ExecStartPre=/bin/bash -c 'until ip -4 route get 1; do sleep 1; done'
-ExecStart=/bin/bash -c "echo HOST_IP=$(ip -4 route get 1 |  cut -d ' ' -f7)" > /opt/crossover/environment
-ExecStart=/bin/bash -c "echo HOST_IP=$(ip -4 route get 1 |  cut -d ' ' -f7)" > /opt/crossover/environment
-ExecStartPost=/bin/bash -c 'sed -i "s/127.0.0.1/$(hostname -I | awk "{print \$1}")/g" /opt/crossover/camillagui_backend/_internal/config/camillagui.yml'
-
+ExecStart=/bin/bash -c '/opt/crossover/local/bin/generate-camilla-environment-config.sh'
 
 [Install]
 WantedBy=multi-user.target
