@@ -1,12 +1,11 @@
 [Unit]
 Description=CamillaDSP Web GUI
-After=camilladsp.service
-Requires=camilladsp.service
+After=camilladsp.service network-online.target camilladsp-environment.service
+Requires=camilladsp.service camilladsp-environment.service
 
 [Service]
 Type=idle
 User=crossover
-#ExecStartPre=/bin/sh -c 'IP=$(ip -4 route get 1.1.1.1 | awk "{print \$7; exit}"); /usr/bin/yq -y -i ".camilla_host = \"${IP}\"" /opt/crossover/camillagui_backend/_internal/config/camillagui.yml'
 ExecStart=/opt/crossover/camillagui_backend/camillagui_backend
 Slice=audio.slice
 
