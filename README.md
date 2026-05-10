@@ -11,6 +11,9 @@ All services run in an 'audio.slice' cgroup and with proper startup sequencing. 
  - camilladsp needs to include the `-address $HOST_IP` arg, or it will not open a listening websocket.
  - roon-extension-cdsp requires the camilladsp process to have opened a websocket on the main IPv4 interface.
 
+To-Do:  `/opt/crossover/camillagui_backend/_internal/config/camillagui.yml` wants a hard-coded IP address. Use sed to dynamically update.  The '!ENV {VAR}' construct didn't work.
+
+
 ## Requires: ##
 Packages:
 ```
