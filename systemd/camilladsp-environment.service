@@ -6,7 +6,7 @@ Wants=network-online.target
 [Service]
 Type=oneshot
 ExecStartPre=/bin/bash -c 'until ip -4 route get 1; do sleep 1; done'
-ExecStart=/bin/bash -c "echo HOST_IP=$(ip -4 route get 1 |  cut -d ' ' -f7)"
+ExecStart=/bin/bash -c "echo HOST_IP=$(ip -4 route get 1 |  cut -d ' ' -f7)" > /opt/crossover/environment
 
 [Install]
 WantedBy=multi-user.target
